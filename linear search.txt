@@ -1,0 +1,30 @@
+//linear search
+#include<stdio.h>
+int main()
+{
+    int a[20],i,n,x,flag=0;
+    printf("\n enter the number of elements:\n");
+    scanf("%d",&n);
+    printf("\n enter the elements of the arrays:\n");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("\n enter the element to be searched:");
+    scanf("%d",&x);
+    for(i=0;i<n;i++)
+    {
+        if(a[i]==x)
+        {
+            printf("%d is found at %d position",x,i+1);
+            flag=1;
+            break;
+        }
+        
+    }
+    if(flag==0)
+    {
+        printf("%d is not found in the given list of arrays",x);
+    }
+    return 0;
+}
