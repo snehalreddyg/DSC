@@ -1,0 +1,196 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct BST
+{
+    struct BST *left;
+    int data;
+    struct BST *right;
+}node;
+node *create()
+{
+    node *temp;
+    int ele;
+    temp=(node*)malloc(sizeof(node));
+    printf("\n enter the data :- ");
+    scanf("%d",&ele);
+    temp->left=NULL;
+    temp->right=NULL;
+    temp->data=ele;
+    return temp;
+}
+
+void insert(node*root,node*temp)
+{
+    if(root->data>temp->data)
+      { 
+       if(root->left!=NULL)
+            insert(root->left,temp);
+       else
+            root->left=temp;
+      }
+    else if(root->data<temp->data)
+      { 
+       if(root->right!=NULL)
+            insert(root->right,temp);
+       else
+            root->right=temp;
+      }
+     else
+     {
+         if(root->data==temp->data)
+         {
+            printf("\n duplicate entries are not allowed");
+            return;
+         }
+     } 
+}
+
+void inorder(node*root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d\t",root->data);
+        inorder(root->right);
+    }
+}
+
+void preorder(node*root)
+{
+    if(root!=NULL)
+    {
+        printf("%d\t",root->data);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+void postorder(node*root)
+{
+    if(root!=NULL)
+    {
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d\t",root->data);
+    }
+}
+node *inorderpred(node *root)
+  {
+      if(root!=NULL && root->left!=NULL)
+           root=root->left;
+           return root;
+  }
+node *deleteof(node *root,int val)
+  {
+      if(root->data>val)
+         root->left=deleteof(root->left,val);
+      else if (root->data<val)
+         root->right=deleteof(root->right,val);
+      else
+        {
+            if(root->right==NULL)
+              {
+                  node *temp;
+                  temp=root->left;
+                  free(root);
+                  root->left=NULL;
+                  root->right=NULL;
+                  root=temp;
+              }
+             else if(root->left==NULL)
+              {
+                  node *temp;
+                  temp=root->right;
+                  free(root);
+                  root->left=NULL;
+                  root->right=NULL;
+                  root=temp;
+              }
+            else
+             {
+                 node *temp;
+                 temp=inorderpred(root->right);
+                 root->data=temp->data;
+                root->right=deleteof(root->right,temp->data);
+             }
+             
+        }
+        return root;
+  }
+
+int search(node *root,int e)
+{
+ if(root==NULL)
+ return 0;
+ if(root->data==e)
+ return 1;
+ else if(root->data<e)
+ search(root->right,e);
+ else
+ search(root->left,e);
+}
+
+void display(node*root)
+{
+    int ch;
+    printf("\n1.inorder\t2.preorder\t3.postorder");
+    printf("\n enter the traversal type :-");
+    scanf("%d",&ch);
+    switch(ch)
+      {
+        case 1:
+            inorder(root);
+            break;
+        case 2:
+            preorder(root);
+            break;
+        case 3:
+            postorder(root);
+            break;
+      }
+}
+
+
+
+
+int main()
+{
+    node *root=NULL,*temp;
+    int ch,ele,pos;
+    printf("\n MENU :- \n");
+    printf("1.insertion\n2.search\n3.display\n4.deletion");
+    do
+    {
+        printf("\n enter the choice = ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                    temp=create();
+                    if(root==NULL)
+                        root=temp;
+                    else
+                        insert(root,temp);
+                    break;
+            case 2:
+                    printf("\n enter the element you want to search :- ");
+                    scanf("%d",&ele);
+                    pos=search(root,ele);
+                    if(pos==1)
+                        printf("\n element found :) !!!");
+                    else
+                        printf("\n element not found :( !!!");
+                    break;
+            case 3:
+                    display(root);
+                    break;
+            case 4:
+                    printf("\n enter the element you want to delete :- ");
+                    scanf("%d",&ele);
+                    root=deleteof(root,ele);
+                    printf("%d is deleted",ele);
+                    break;
+        }
+    }while(ch!=0);
+    return 0;
+}
