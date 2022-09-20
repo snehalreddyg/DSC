@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node
+{
+    int *list;int cap;int top;
+}
+node;
+node *create(int c)
+{
+    node *ps;ps = (node*)malloc(sizeof(node));
+    ps->list=(int*)malloc(c*sizeof(int));
+    ps->cap=c;
+    ps->top=-1;
+    return ps;
+}
+void push(node*ps)
+{
+int x;
+if(ps->top==ps->cap-1)
+{
+    printf("\n overflow");
+    return;
+}
+else
+{
+    printf("\n enter item");
+    scanf("%d",&x);
+    ps->top++;
+    ps->list[ps->top]=x;
+}
+}
+int pop(node*ps)
+{
+if(ps->top==-1)
+{
+    printf("\n underflow");
+    return -1;
+}
+else
+{
+    int ele;
+    ele=ps->list[ps->top];ps->top--;
+    return ele;
+}
+}
+void display(node*ps)
+{
+int i;
+if(ps->top==-1)
+printf("\n empty");
+else{for(i=ps->top;i>=0;i--)
+printf("%3d",ps->list[i]);
+}
+}
+int main()
+{int ch,ele,n;
+printf("\n capacity = ");
+scanf("%d",&n);
+node*ps = create(n);
+printf("push\tpop\tdisplay");
+do{printf("\nchoice = ");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:push(ps);
+break;
+case 2:ele=pop(ps);
+if(ele!=-1)
+printf("%d is poped",ele);
+break;
+case 3:display(ps);
+break;
+}
+}while(ch!=0);
+return 0;
+}
