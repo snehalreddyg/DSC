@@ -1,0 +1,74 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<ctype.h>
+#define MAX 100
+int st[MAX];
+char postfix[MAX];
+int top=-1;
+void push(int ele)
+{
+if(top==MAX-1)
+{
+    printf("\n stack is full !!");
+    
+} 
+else
+{
+    top++; st[top]=ele;
+    
+}
+}
+int pop()
+{
+    if(top==-1) 
+    printf("\n stack is empty !!!");
+    else
+    {
+        int item=st[top];
+        top--;
+        return item;
+        
+    }
+}
+void eval_postfix(char postfix[])
+{
+    int a,b,i,val;
+    char ch; 
+    for(i=0;postfix[i]!='\0';i++)
+    {
+        ch=postfix[i];
+        if(isdigit(ch)) push(ch-'0');
+        else if(ch=='+' || ch=='-' || ch=='*'||ch=='/')
+        {
+            a=pop();
+            b=pop();
+            switch(ch)
+            {
+                case '+': val=b+a;
+                break;
+                case '-': val=b-a;
+                break;
+                case '*': val=b*a;
+                break;
+                case '/': val=b/a; break;
+                
+            }
+            push(val);
+        }
+        
+    }
+    printf("\n result = %d",pop());
+}
+int main()
+{
+    printf("\n enter the postfix expression ending with ') = "); 
+    int i;
+    for(i=0;i<MAX-1;i++)
+    {
+        scanf("%c",&postfix[i]);
+        if(postfix[i]==')')break;
+        
+    } 
+    eval_postfix(postfix);
+    return(0);
+}
