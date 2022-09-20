@@ -1,0 +1,207 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+    {
+        int data;
+        struct node *next;
+    };
+void insertAtBegin();
+void deleteAtBegin();
+void insertAtEnd();
+void deleteAtEnd();
+void insertAtPos();
+void deleteAtPos();
+void insertAtData();
+void deleteAtData();
+void display();
+struct node *head,*newnode,*temp,*prev;
+int main()
+{
+    int ch;
+    printf("\nMENU\n");
+    printf("1.insertAtBegin\n2.insertAtEnd\n3.insertAtPos\n4.insertAtData\n5.deleteAtBegin\n6.deleteAtEnd\n7.deleteAtPos\n8.deleteAtData\n9.display");
+    do
+    {
+        printf("\n enter choice =\t");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                   insertAtBegin();
+                   break;
+            case 2:
+                    insertAtEnd();
+                    break;
+            case 3:
+                   insertAtPos();
+                   break;
+            case 4:
+                    insertAtData();
+                    break;
+            case 5:
+                    deleteAtBegin();
+                    break;
+            case 6:
+                    deleteAtEnd();
+                    break;
+            case 7:
+                    deleteAtPos();
+                    break;
+            case 8:
+                    deleteAtData();
+                    break;
+            case 9:
+                    display();
+                    break;
+            default:
+                    printf("\nenter valid choice\n");
+                    break;
+
+        }
+    }while(ch!=0);
+    return(0);
+}
+
+void insertAtBegin()
+{
+    newnode = (struct node *)malloc(sizeof(struct node));
+        printf("\n enter the data = \t");
+        scanf("%d",&newnode->data);
+        newnode->next = head;
+        head = newnode;
+    
+}
+
+void insertAtEnd()
+{
+    temp = head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("\n enter the data = \t");
+    scanf("%d",&newnode->data);
+    temp->next=newnode;
+    newnode->next=NULL;
+}
+
+void insertAtPos()
+{
+    int i=1,pos;
+    temp = head;
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("\n enter the data = \t");
+    scanf("%d",&newnode->data);
+    printf("\n enter the position you want to insert = \t");
+    scanf("%d",&pos);
+    while(temp!=NULL)
+    {
+        if(i==pos-1)
+        {
+            newnode->next=temp->next;
+            temp->next=newnode;
+        }
+        temp=temp->next;
+        i++;
+    }
+}
+
+void insertAtData()
+{
+    int data;
+    temp = head;
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("\n enter the data = \t");
+    scanf("%d",&newnode->data);
+    printf("\n enter the data after you want to insert = \t");
+    scanf("%d",&data);
+    while(temp!=NULL)
+    {
+        if(temp->data==data)
+        {
+            newnode->next=temp->next;
+            temp->next=newnode;
+        }
+        temp=temp->next;
+    }
+}
+
+void deleteAtBegin()
+{
+    temp=head;
+    head=head->next;
+    free(temp);
+}
+
+void deleteAtEnd()
+{
+    temp=head;
+    prev=NULL;
+    while(temp->next!=NULL)
+    {
+        prev=temp;
+        temp=temp->next;
+    }
+    prev->next=NULL;
+    free(temp);
+}
+
+void deleteAtPos()
+{
+    int i=0,pos;
+    temp = head;
+    printf("\n enter the position  you want to delete = \t");
+    scanf("%d",&pos);
+    for (i=0;i<pos;i++)
+    {
+        prev=temp;
+        temp=temp->next;
+    }
+    prev->next=temp->next;
+    free(temp);
+}
+
+void deleteAtData()
+{
+    int data;
+    temp = head;
+    printf("\n enter the data  you want to delete = \t");
+    scanf("%d",&data);
+    while(temp!=NULL)
+    {
+        if(temp->data==data)
+        {
+            if(temp==head)
+            {
+            head=head->next;
+            free(temp);
+            }
+        else
+        {
+            prev->next = temp->next;
+            free(temp);
+        }
+        }
+        else
+        {
+        prev=temp;
+        temp=temp->next;  
+        }
+   }
+}
+
+void display()
+{
+        temp = head;
+        while(temp!=NULL)
+        {
+            printf("%d\t",temp->data);
+            temp=temp->next;
+        }
+        if(head==NULL)
+        {
+            printf("\n list is empty\n");
+        }
+        
+}
