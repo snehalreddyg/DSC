@@ -1,0 +1,50 @@
+// selection sort
+#include<stdio.h>
+void selectionsort(int[],int);
+int main()
+{
+    int a[100],n,i;
+    printf("\n size = ");
+    scanf("%d",&n);
+    printf("\n enter elements \n");
+    for(i=0;i<n;i++)
+    {
+        printf("\n a[%d]= ",i); 
+        scanf("%d",&a[i]);
+    } 
+    printf("\n elements before sorting");
+    for(i=0;i<n;i++)
+    {
+        printf("%3d",a[i]);
+    }
+    selectionsort(a,n);
+    printf("\n elements after sorting\n");
+    for(i=0;i<n;i++)
+    {
+        printf("%3d",a[i]);
+    }
+    return(0);
+}
+void selectionsort(int A[],int n)
+{
+    int i,j,min,temp;
+    for(i=0;i<n-1;i++)
+    {
+        min=i;
+    for(j=i+1;j<n;j++)
+    {
+        if(A[j]<A[min])
+        {
+            min=j;
+    temp=A[min];
+    A[min]=A[i];
+    A[i]=temp;
+    }
+}
+}
+printf("\n array elements after sorting");
+for(i=0;i<n;i++)
+{
+    printf("%3d",A[i]);
+}
+}
