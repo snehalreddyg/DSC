@@ -1,0 +1,115 @@
+//QUEUE ADT
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct queue
+{int *list;
+int capacity;
+int front;
+int rear;
+};
+typedef struct queue qadt;
+qadt *createqueue(int cap)
+{ 
+qadt *pq=NULL;
+pq = (qadt *)malloc(sizeof(qadt));
+if(NULL==pq){ perror("malloc"); exit(1);
+}
+pq -> capacity = cap;
+pq->front = 0;
+pq->rear = -1;
+pq->list = (int *)malloc(cap * sizeof(int));
+if(NULL==pq->list)
+{
+    perror("malloc");exit(1); 
+}
+return pq;
+}
+bool isFull(qadt *pq)
+{
+return (pq->rear==pq->capacity-1)?true:false;
+}
+bool isEmpty(qadt *pq)
+{
+return (pq->rear<pq->front)?true:false;
+}
+void enqueue(qadt *pq,int ele)
+{
+if(isFull(pq))
+{
+printf("\n queue is full");
+return;
+}
+else
+{pq->rear++;
+pq->list[pq->rear]=ele;
+}
+}
+int dequeue(qadt *pq)
+{
+if(isEmpty(pq))
+{printf("\n queue is emtpy");
+pq->front=0;
+pq->rear=-1;
+return -1;
+}
+else
+{ 
+int del=pq->list[pq->front];
+pq->front++;
+return del;
+}
+}
+void display(qadt *pq)
+{
+int i;
+if(isEmpty(pq))
+{
+printf("\nqueue is empty");
+return ;
+}
+else
+{
+for(i=pq->front;i<=pq->rear;i++)
+{
+printf("%d\t",pq->list[i]);
+}
+}
+}
+void destroy(qadt *pq)
+{
+free(pq->list);
+free(pq);
+} 
+int main()
+{
+int c;
+printf("\n enter capacity = ");
+scanf("%d",&c);
+qadt *pq = createqueue(c);
+int del,ch,n;
+printf("\n MENU \n");
+printf("\n1.enqueu\n2,dequeue\n3.display\n");
+do
+{
+printf("\n enter the choice");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:printf("\n enter the element you want to insert");
+scanf("%d",&n);
+enqueue(pq,n);
+printf("\n element element inserted succesfully!!!");
+break;
+case 2:del = dequeue(pq);
+if(del!=-1)
+printf("\n the deleted element is %d",del);
+printf("\n element deleted succesfully");
+break;
+case 3:display(pq);
+break;default:printf("\n enter valid choice");
+exit(0);
+}
+}while(ch!=7);
+return 0;
+}
