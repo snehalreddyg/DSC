@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node
+{
+ int data;
+ struct node *next;
+}stack;
+stack *top=NULL,*newnode,*temp;
+void push()
+{
+        newnode=(stack*)malloc(sizeof(stack));
+        printf("\n enter the data = ");
+        scanf("%d",&newnode->data);
+        newnode->next=top;
+        top=newnode;
+    
+}
+
+int pop()
+{
+    temp=top;
+    int x;
+    if(top==NULL)
+    {
+        printf("\n stack is empty");
+        return;
+    }
+    else
+    {
+        top=top->next;
+        x=temp->data;
+        free(temp);
+         printf("\n %d is popped",x);
+
+        return x;
+    }
+}
+
+void display()
+{
+    printf("\n the stack elements are ");
+    temp=top;
+    while(temp!=NULL)
+    {
+        printf("%3d",temp->data);
+        temp=temp->next;
+    }
+}
+
+int main()
+{
+    int ch,x;
+    printf("\n 1.push 2.[pop] 3.display ");
+    scanf("%d",&ch);
+    do
+    {
+        printf("\n choice = ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                push();
+                break;
+            case 2:
+                x = pop();
+                break;
+            case 3:
+                display();
+                break;
+            default:
+                printf("\n enter valid choice ");
+                break;
+        }
+    }while(ch!=0);
+    return(0);
+}
