@@ -1,0 +1,64 @@
+//quadratic probing
+#include<stdio.h>
+#include<stdlib.h>
+#define size 10
+int h[size]={NULL};
+void insert()
+{
+    int key,index,i,flag=0,hkey;
+    printf("\n enter a value to insert into the hash table:");
+    scanf("%d",&key);
+    hkey=key%size;
+    for(i=0;i<size;i++)
+    {
+        index=(hkey+(i*i))%size;
+        if(h[index]==NULL)
+        {
+            h[index]=key;
+            break;
+        }
+    }
+    if(i==size)
+    printf("\n element cannot ne inserted \n");
+}
+void search()
+{
+    int key,index,i,flag=0,hkey;
+    printf("\n enter the search element:");
+    scanf("%d",&key);
+    hkey=key%size;
+    for(i=0;i<size;i++)
+    {
+        index=(hkey+(i*i))%size;
+        if(h[index]==key)
+        {
+            printf("\n value is found at index %d",index);
+            break;
+        }
+    }
+    if(i==size)
+    printf("\n value is not found");
+}
+void display()
+{
+    int i;
+    printf("\n elements in the hash table are");
+    for(i=0;i<size;i++)
+    printf("\n at index %d \t value=%d",i,h[i]);
+}
+int main()
+{
+    int opt,i;
+    while(1)
+    {
+        printf("\n menu 1. insert \t 2. display \t 3. search \t 4. exit \t \n");
+        scanf("%d",&opt);
+        switch(opt)
+        {
+            case 1:insert();break;
+            case 2:display();break;
+            case 3:search();break;
+            case 4:exit(0);
+        }
+    }
+}
